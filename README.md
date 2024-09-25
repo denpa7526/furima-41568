@@ -6,11 +6,11 @@
 | ------------------ | ------ | ------------------------- |
 | email              | string | null: false, unique: true |
 | encrypted_password | string | null: false,              |
-| nickname           | string | null: false, unique: true |
-| last_name          | string | null: false, unique: true |
-| first_name         | string | null: false, unique: true |
-| last_name_kana     | string | null: false, unique: true |
-| first_name_kana    | string | null: false, unique: true |
+| nickname           | string | null: false               |
+| last_name          | string | null: false               |
+| first_name         | string | null: false               |
+| last_name_kana     | string | null: false               |
+| first_name_kana    | string | null: false               |
 | user_birth_date    | date   | null: false               |
 
 ### Association
@@ -35,7 +35,7 @@
 
 ### Association
 
-- has_one :orders
+- has_one :order
 - belongs_to :user
 
 
@@ -62,7 +62,7 @@
 | city          | string     | null: false                    |
 | addresses     | string     | null: false                    |
 | building      | string     |                                |
-| phone_number  | integer    | null: false                    |
+| phone_number  | string     | null: false                    |
 | order         | references | null: false, foreign_key: true |
 
 
