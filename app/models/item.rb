@@ -23,4 +23,8 @@ class Item < ApplicationRecord
       validates :delivery_time_id
     end
   end
+
+  # def sold?
+  # order.present?
+  # end
 end
