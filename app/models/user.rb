@@ -2,6 +2,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :items
+
   with_options presence: true do
     validates :nickname
     validates :user_birth_date
@@ -16,8 +18,6 @@ class User < ApplicationRecord
       validates :first_name_kana
     end
   end
-
-  # validates :encrypted_password, format: { with: /\A[a-z0-9]+\z/i }
 
   VALID_PASSWORD_REGEX = /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}\z/
   validates :password, format: { with: VALID_PASSWORD_REGEX, message: 'is invalid. Include both letters and numbers' }
