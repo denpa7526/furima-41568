@@ -24,9 +24,9 @@
         <%= @item.shopping_fee.name %>
       </span>
     </div>
-    <% if user_signed_in? %>
+    <% if user_signed_in? %> <%# 且つ 商品が出品中である(商品が出品中かどうか、アソシエーションを利用して、商品情報から購入情報を取得) %>
       <% if current_user.id == @item.user_id %>
-        <%= link_to "商品の編集", "#", method: :get, class: "item-red-btn" %>
+        <%= link_to "商品の編集", edit_item_path, method: :get, class: "item-red-btn" %>
         <p class="or-text">or</p>
         <%= link_to "削除", "#", data: {turbo_method: :delete}, class:"item-destroy" %>
       <% else %>
