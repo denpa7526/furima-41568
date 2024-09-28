@@ -91,6 +91,5 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include('User must exist')
       end
     end
-    
   end
 end

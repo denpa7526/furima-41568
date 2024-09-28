@@ -24,9 +24,7 @@ class Item < ApplicationRecord
     end
   end
 
-  def sold?
-    false
-    # order.present?
-  end
-
+  # def sold?
+  # order.present?
+  # end
 end
