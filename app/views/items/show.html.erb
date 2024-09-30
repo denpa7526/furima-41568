@@ -8,14 +8,13 @@
     </h2>
     <div class="item-img-content">
       <%= image_tag @item.image, class:"item-box-img" if @item.image.attached?%>
-
-      <%# 商品が売れている場合、Orderモデル追加したら入れる if item.sold? %>
+      <% if @item.sold? %>
         <div class="sold-out">
           <span>Sold Out!!</span>
         </div>
-      <%# 商品が売れている場合、Orderモデル追加したら入れる end %>
-
+      <%  end %>
     </div>
+
     <div class="item-price-box">
       <span class="item-price">
         ¥ <%= @item.price %>
@@ -24,15 +23,17 @@
         <%= @item.shopping_fee.name %>
       </span>
     </div>
-    <% if user_signed_in? %> <%# 且つ 商品が出品中である(商品が出品中かどうか、アソシエーションを利用して、商品情報から購入情報を取得) %>
+    <% if user_signed_in? %>
       <% if current_user.id == @item.user_id %>
-        <%= link_to "商品の編集", edit_item_path, method: :get, class: "item-red-btn" %>
-        <p class="or-text">or</p>
-        <%= link_to "削除", item_path, data: {turbo_method: :delete}, class:"item-destroy" %>
+        <% unless @item.sold? %>
+          <%= link_to "商品の編集", edit_item_path, method: :get, class: "item-red-btn" %>
+          <p class="or-text">or</p>
+          <%= link_to "削除", item_path, data: {turbo_method: :delete}, class:"item-destroy" %>
+        <% end %>
       <% else %>
-        <%# 商品が売れていない場合、Orderモデル追加したら入れる if item.sold? %>
-        <%= link_to "購入画面に進む", "#" ,class:"item-red-btn"%>
-        <%# 商品が売れていない場合、Orderモデル追加したら入れる end %>
+        <% unless @item.sold? %>
+          <%= link_to "購入画面に進む", item_orders_path(@item), data: { turbo: false },class:"item-red-btn"%>
+        <% end %>
       <% end %>
     <% end %>
     <div class="item-explain-box">

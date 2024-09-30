@@ -134,11 +134,11 @@
             <div class='item-img-content'>
               <%= image_tag item.image, class: "item-img" if item.image.attached?%>
 
-              <%# Orderモデル追加したら入れる if item.sold? %>
+              <% if item.sold? %>
                 <div class='sold-out'>
                   <span>Sold Out!!</span>
                 </div>
-              <%# Orderモデル追加したら入れる end %>
+              <% end %>
 
             </div>
             <div class='item-info'>
