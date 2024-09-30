@@ -28,5 +28,4 @@ class Item < ApplicationRecord
   def sold?
     order.present?
   end
-  
 end

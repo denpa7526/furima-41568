@@ -39,18 +39,15 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    if current_user.id == @item.user.id
-      @item.destroy
-      redirect_to root_path
-    else
-      redirect_to root_path
-    end
+    @item.destroy if current_user.id == @item.user.id
+    redirect_to root_path
   end
 
   private
 
   def item_params
-    params.require(:item).permit(:item_name, :item_info, :category_id, :condition_id, :shopping_fee_id, :prefecture_id, :delivery_time_id, :price, :image).merge(user_id: current_user.id)
+    params.require(:item).permit(:item_name, :item_info, :category_id, :condition_id, :shopping_fee_id, :prefecture_id,
+                                 :delivery_time_id, :price, :image).merge(user_id: current_user.id)
   end
 
   def set_item
@@ -60,5 +57,4 @@ class ItemsController < ApplicationController
   def redirect_if_not_authorized
     redirect_to root_path unless current_user.id == @item.user.id && !@item.sold?
   end
-
 end

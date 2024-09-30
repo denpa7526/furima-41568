@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   before_action :redirect_if_not_authorized_to_purchase
 
   def index
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order_destination = OrderDestination.new
   end
 
@@ -13,9 +13,9 @@ class OrdersController < ApplicationController
     if @order_destination.valid?
       pay_item
       @order_destination.save
-      return redirect_to root_path
+      redirect_to root_path
     else
-      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+      gon.public_key = ENV['PAYJP_PUBLIC_KEY']
       render :index, status: :unprocessable_entity
     end
   end
@@ -23,7 +23,9 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order_destination).permit(:post_code, :prefecture_id, :city, :addresses, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+    params.require(:order_destination).permit(:post_code, :prefecture_id, :city, :addresses, :building, :phone_number).merge(
+      user_id: current_user.id, item_id: params[:item_id], token: params[:token]
+    )
   end
 
   def set_item
@@ -32,21 +34,18 @@ class OrdersController < ApplicationController
 
   def redirect_if_not_authorized_to_purchase
     if user_signed_in?
-      if current_user.id == @item.user.id || @item.sold?
-        redirect_to root_path
-      end
+      redirect_to root_path if current_user.id == @item.user.id || @item.sold?
     else
       redirect_to new_user_session_path
     end
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,
       card: order_params[:token],
       currency: 'jpy'
     )
   end
-
 end
