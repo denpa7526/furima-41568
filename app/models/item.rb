@@ -1,5 +1,6 @@
 class Item < ApplicationRecord
   belongs_to :user
+  has_one :order
   has_one_attached :image
 
   extend ActiveHash::Associations::ActiveRecordExtensions
@@ -24,7 +25,8 @@ class Item < ApplicationRecord
     end
   end
 
-  # def sold?
-  # order.present?
-  # end
+  def sold?
+    order.present?
+  end
+  
 end
