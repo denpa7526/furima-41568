@@ -1,4 +1,4 @@
-# FURIMAのER図
+# FURIMAのテーブル設計
 
 ## usersテーブル
 
